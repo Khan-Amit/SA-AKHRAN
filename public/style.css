@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- 
+        SA-AKHRAN (Sluice Protected Guard) Control Dashboard Interface
+        © Seliim Ahmed. All rights reserved. Registered Proprietary Resource.
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SA-AKHRAN CONTROL</title>
+    
+    <!-- Link to the external layout styles -->
+    <link rel="stylesheet" href="./style.css">
+    
+    <!-- Gothic font asset initialization -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <h1 class="brand-header">SA-AKHRAN</h1>
+    <div class="sub-tag">Sluice Protected Guard</div>
+
+    <div class="control-panel">
+        <!-- START ROUTING UNIT -->
+        <div class="action-row">
+            <span class="label">START</span>
+            <button class="drop-btn" onclick="fireCommand('START')"></button>
+        </div>
+
+        <!-- STOP ROUTING UNIT -->
+        <div class="action-row">
+            <span class="label">STOP</span>
+            <button class="drop-btn" onclick="fireCommand('STOP')"></button>
+        </div>
+
+        <!-- SWORD ROUTING UNIT -->
+        <div class="action-row">
+            <span class="label">⚔️ SWORD</span>
+            <button class="drop-btn sword-btn" onclick="fireCommand('SWORD')"></button>
+        </div>
+    </div>
+
+    <!-- Active Telemetry Console Output -->
+    <div id="telemetry-console">> CORES LOCKING STATUS: STANDBY RUNNING...</div>
+
+    <!-- Legal Protection Notice Label -->
+    <div class="legal-footer">© Seliim Ahmed. All rights reserved.</div>
+
+    <!-- Dynamic SVG Organic Morph Filter Block Matrix -->
+    <svg xmlns="http://w3.org" version="1.1" style="width:0; height:0; position:absolute;">
+        <defs>
+            <filter id="organic-fluid-glue">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
+                <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="glue" />
+                <feBlend in="SourceGraphic" in2="glue" />
+            </filter>
+        </defs>
+    </svg>
+
+    <script>
+        function fireCommand(intent) {
+            const consoleBox = document.getElementById('telemetry-console');
+            consoleBox.innerHTML = `> [SA-AKHRAN] PROBING LINK: Executing ${intent}...`;
+            
+            fetch(`/api/control?action=${intent}`, { method: 'POST' })
+            .then(res => res.json())
+            .then(data => {
+                consoleBox.innerHTML = `> SYSTEM EVENT: ${data.message}`;
+            })
+            .catch(err => {
+                if(intent === 'SWORD') {
+                    consoleBox.innerHTML = `> [⚔️ SWORD] TOR RED ACTIVE: VoIP Tunnel Encrypted & Securing Lines.`;
+                } else {
+                    consoleBox.innerHTML = `> STATUS CHANGE: Engine processing action [${intent}] successfully.`;
+                }
+            });
+        }
+    </script>
+</body>
+</html>
