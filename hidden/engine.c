@@ -1,6 +1,6 @@
 /* 
  * SA-AKHRAN - Core Sluice Engine Subsystem
- * © Seliim Ahmed. All rights reserved. (seliim.ahmed@gmail.com)
+ * Copyright Seliim Ahmed. All rights reserved. (seliim.ahmed@gmail.com)
  */
 
 #include <stdio.h>
