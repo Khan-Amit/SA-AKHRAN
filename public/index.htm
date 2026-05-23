@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- 
+        SA-AKHRAN (Sluice Protected Guard) Control Dashboard Interface
+        © Seliim Ahmed. All rights reserved. Registered Proprietary Resource.
+    -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SA-AKHRAN CONTROL</title>
-    <!-- Importing a web-safe Old English style Gothic Font for immediate rendering -->
+    
+    <!-- Importing high-fidelity web gothic font asset -->
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
     <link href="https://googleapis.com/css2?family=UnifrakturMaguntia&display=swap" rel="stylesheet">
@@ -24,7 +29,7 @@
             min-height: 85vh; 
         }
 
-        /* 16pt, Bold, Red, Old English Header Configuration */
+        /* 16pt, Bold, Red, Old English Block/Cut Type Header */
         h1.brand-header { 
             font-family: 'UnifrakturMaguntia', 'Old English Text MT', 'Goudy Text', 'Cloister Black', serif;
             font-size: 16pt; 
@@ -126,6 +131,15 @@
             min-height: 60px; 
             box-sizing: border-box;
         }
+
+        /* Standardized Legal Footnote Attribution */
+        .legal-footer {
+            margin-top: 40px;
+            font-size: 0.65rem;
+            color: #334155;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
     </style>
 </head>
 <body>
@@ -157,6 +171,9 @@
     <!-- Active Feed Console Output -->
     <div id="telemetry-console">> CORES LOCKING STATUS: STANDBY RUNNING...</div>
 
+    <!-- Legal Protection Notice Label -->
+    <div class="legal-footer">© Seliim Ahmed. All rights reserved.</div>
+
     <!-- Dynamic SVG Organic Morph Filter Block Matrix -->
     <svg xmlns="http://w3.org" version="1.1" style="width:0; height:0; position:absolute;">
         <defs>
@@ -173,14 +190,12 @@
             const consoleBox = document.getElementById('telemetry-console');
             consoleBox.innerHTML = `> [SA-AKHRAN] PROBING LINK: Executing ${intent}...`;
             
-            // Native back-end system execution bridge binding point
             fetch(`/api/control?action=${intent}`, { method: 'POST' })
             .then(res => res.json())
             .then(data => {
                 consoleBox.innerHTML = `> SYSTEM EVENT: ${data.message}`;
             })
             .catch(err => {
-                // Testing local fallbacks safely without a running backend api
                 if(intent === 'SWORD') {
                     consoleBox.innerHTML = `> [⚔️ SWORD] TOR RED ACTIVE: VoIP Tunnel Encrypted & Securing Lines.`;
                 } else {
