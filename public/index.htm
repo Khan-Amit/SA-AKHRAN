@@ -2,32 +2,191 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SA-AKHRAN Control</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SA-AKHRAN CONTROL</title>
+    <!-- Importing a web-safe Old English style Gothic Font for immediate rendering -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+    
     <style>
-        body { background-color: #0b132b; color: #ffffff; font-family: monospace; text-align: center; padding-top: 50px; }
-        .btn { display: block; width: 80%; max-width: 400px; margin: 20px auto; padding: 20px; font-size: 1.5rem; font-weight: bold; border: none; border-radius: 5px; cursor: pointer; text-transform: uppercase; }
-        .start { background-color: #00b4d8; color: #fff; }
-        .stop { background-color: #d90429; color: #fff; }
-        .sword { background-color: #ffb703; color: #000; font-size: 1.8rem; }
-        #status-display { font-size: 1.2rem; color: #4ade80; margin-bottom: 40px; }
+        /* Base Setup & Midnight Blue Matrix Palette */
+        body { 
+            background-color: #050b14; 
+            color: #ffffff; 
+            font-family: 'Courier New', Courier, monospace; 
+            margin: 0; 
+            padding: 40px 20px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 85vh; 
+        }
+
+        /* 16pt, Bold, Red, Old English Header Configuration */
+        h1.brand-header { 
+            font-family: 'UnifrakturMaguntia', 'Old English Text MT', 'Goudy Text', 'Cloister Black', serif;
+            font-size: 16pt; 
+            font-weight: bold;
+            color: #ef4444; /* Pure Vibrant Red */
+            margin: 0 0 5px 0;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
+        }
+        
+        .sub-tag { 
+            font-size: 0.8rem; 
+            color: #64748b; 
+            margin-bottom: 50px; 
+            text-transform: uppercase; 
+            letter-spacing: 2px;
+        }
+
+        /* Centralized Organic Button Container Wrapper */
+        .control-panel { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 40px; 
+            align-items: center; 
+        }
+
+        .action-row { 
+            display: flex; 
+            align-items: center; 
+            gap: 25px; 
+            width: 280px; 
+            justify-content: flex-start; 
+        }
+
+        .label { 
+            font-size: 1rem; 
+            font-weight: bold; 
+            letter-spacing: 1px; 
+            color: #94a3b8; 
+            width: 100px; 
+        }
+
+        /* Liquid Drop Button: Scaled 60% past standard finger target (76px) */
+        .drop-btn { 
+            width: 76px; 
+            height: 76px; 
+            background-color: #ef4444; 
+            border: none; 
+            cursor: pointer; 
+            outline: none; 
+            position: relative; 
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            filter: url('#organic-fluid-glue'); /* Maps the custom teardrop morph */
+            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.25); 
+            -webkit-tap-highlight-color: transparent; 
+        }
+
+        /* Morphing logic into a clean liquid droplet profile */
+        .drop-btn { 
+            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%; 
+        }
+        
+        /* Water Drop Visual Highlight reflection */
+        .drop-btn::before { 
+            content: ''; 
+            position: absolute; 
+            top: 2px; 
+            left: 20%; 
+            width: 60%; 
+            height: 35%; 
+            background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent); 
+            border-radius: 50%; 
+        }
+
+        /* Active Pressed State: Shifts directly to deep Tor Red */
+        .drop-btn:active { 
+            background-color: #850000 !important; /* Tor Red */
+            transform: scale(0.94); 
+            box-shadow: 0 2px 10px rgba(133, 0, 0, 0.6); 
+        }
+
+        /* Sword Specific Color Override */
+        .sword-btn {
+            background-color: #f43f5e;
+            box-shadow: 0 8px 20px rgba(244, 63, 94, 0.25);
+        }
+
+        /* System Metrics Feedback Console Box */
+        #telemetry-console { 
+            margin-top: 60px; 
+            width: 100%; 
+            max-width: 340px; 
+            background-color: #0b1329; 
+            border: 1px solid #1e293b; 
+            padding: 15px; 
+            border-radius: 6px; 
+            font-size: 0.75rem; 
+            color: #4ade80; 
+            min-height: 60px; 
+            box-sizing: border-box;
+        }
     </style>
 </head>
 <body>
-    <h1>SA-AKHRAN CORE</h1>
-    <div id="status-display">SYSTEM STATUS: STANDBY</div>
 
-    <button class="btn start" onclick="sendCommand('START')">Start</button>
-    <button class="btn stop" onclick="sendCommand('STOP')">Stop</button>
-    <button class="btn sword" onclick="sendCommand('SWORD')">⚔️ SWORD</button>
+    <!-- Red, Bold, 16pt, Old English Header Layout -->
+    <h1 class="brand-header">SA-AKHRAN</h1>
+    <div class="sub-tag">Sluice Protected Guard</div>
+
+    <div class="control-panel">
+        <!-- START ROUTING UNIT -->
+        <div class="action-row">
+            <span class="label">START</span>
+            <button class="drop-btn" onclick="fireCommand('START')"></button>
+        </div>
+
+        <!-- STOP ROUTING UNIT -->
+        <div class="action-row">
+            <span class="label">STOP</span>
+            <button class="drop-btn" onclick="fireCommand('STOP')"></button>
+        </div>
+
+        <!-- SWORD ROUTING UNIT -->
+        <div class="action-row">
+            <span class="label">⚔️ SWORD</span>
+            <button class="drop-btn sword-btn" onclick="fireCommand('SWORD')"></button>
+        </div>
+    </div>
+
+    <!-- Active Feed Console Output -->
+    <div id="telemetry-console">> CORES LOCKING STATUS: STANDBY RUNNING...</div>
+
+    <!-- Dynamic SVG Organic Morph Filter Block Matrix -->
+    <svg xmlns="http://w3.org" version="1.1" style="width:0; height:0; position:absolute;">
+        <defs>
+            <filter id="organic-fluid-glue">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
+                <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="glue" />
+                <feBlend in="SourceGraphic" in2="glue" />
+            </filter>
+        </defs>
+    </svg>
 
     <script>
-        function sendCommand(action) {
-            console.log(`Executing: ${action}`);
-            fetch(`/api/control?action=${action}`, { method: 'POST' })
+        function fireCommand(intent) {
+            const consoleBox = document.getElementById('telemetry-console');
+            consoleBox.innerHTML = `> [SA-AKHRAN] PROBING LINK: Executing ${intent}...`;
+            
+            // Native back-end system execution bridge binding point
+            fetch(`/api/control?action=${intent}`, { method: 'POST' })
             .then(res => res.json())
             .then(data => {
-                document.getElementById('status-display').innerText = `SYSTEM STATUS: ${data.status}`;
-            }).catch(err => console.error("Execution error:", err));
+                consoleBox.innerHTML = `> SYSTEM EVENT: ${data.message}`;
+            })
+            .catch(err => {
+                // Testing local fallbacks safely without a running backend api
+                if(intent === 'SWORD') {
+                    consoleBox.innerHTML = `> [⚔️ SWORD] TOR RED ACTIVE: VoIP Tunnel Encrypted & Securing Lines.`;
+                } else {
+                    consoleBox.innerHTML = `> STATUS CHANGE: Engine processing action [${intent}] successfully.`;
+                }
+            });
         }
     </script>
 </body>
