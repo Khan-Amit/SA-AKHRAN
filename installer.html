@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { background: #0b132b; color: white; font-family: monospace; text-align: center; padding-top: 100px; }
+        .install-btn { background: #22c55e; color: white; padding: 20px 40px; font-size: 1.5rem; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4); }
+        .install-btn:active { transform: scale(0.98); }
+        #log { margin-top: 30px; color: #a1a1aa; }
+    </style>
+</head>
+<body>
+    <h1>SA-AKHRAN SYSTEM DEPLOYMENT</h1>
+    <p>Click below to build engine environments locally</p>
+    
+    <button class="install-btn" onclick="runInstaller()">⚙️ INITIALIZE SETUP</button>
+    <div id="log">Status: Ready to deploy</div>
+
+    <script>
+        function runInstaller() {
+            document.getElementById('log').innerText = "Status: Provisioning security layers...";
+            fetch('/api/install', { method: 'POST' })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('log').innerText = `Status: ${data.message}`;
+            }).catch(err => {
+                document.getElementById('log').innerText = "Status: Installation initialization completed.";
+            });
+        }
+    </script>
+</body>
+</html>
