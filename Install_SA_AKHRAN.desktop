@@ -1,0 +1,7 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=true
+Name=Install SA-AKHRAN
+Exec=bash -c "curl -s https://githubusercontent.com | bash; read -p 'Done! Press enter to close...'"
+Icon=utilities-terminal
