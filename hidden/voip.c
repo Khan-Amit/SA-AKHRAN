@@ -1,6 +1,6 @@
 /* 
  * SA-AKHRAN - Secure VoIP Channel Tunnel Subsystem
- * © Seliim Ahmed. All rights reserved.
+ * Copyright Seliim Ahmed. All rights reserved.
  */
 
 #include <stdio.h>
