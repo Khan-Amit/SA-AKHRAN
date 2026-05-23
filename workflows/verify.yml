@@ -1,7 +1,7 @@
-# SA-AKHRAN - Core Integration Guard Pipeline
+# SA-AKHRAN - Core Integration Path Guard Pipeline
 # Copyright Seliim Ahmed. All rights reserved. (seliim.ahmed@gmail.com)
 
-name: SA-AKHRAN Path Verification
+name: SA-AKHRAN Root Path Verification
 
 on:
   push:
@@ -17,26 +17,30 @@ jobs:
     - name: Checkout Repository Code
       uses: actions/checkout@v4
 
-    - name: Verify Strict Matrix Folders
+    - name: Verify Strict Root Folders Matrix
       run: |
-        echo "Validating path structural constraints..."
+        echo "Validating bracket-free directory matrix layout..."
+        if [ ! -d "workflows" ]; then
+          echo "ERROR: Root path 'workflows' missing or misplaced."
+          exit 1
+        fi
         if [ ! -d "calculations/dump" ]; then
-          echo "ERROR: Critical path 'calculations/dump' missing or broken."
+          echo "ERROR: Pipeline path 'calculations/dump' missing or broken."
           exit 1
         fi
         if [ ! -d "hidden" ]; then
-          echo "ERROR: Critical path 'hidden' missing or broken."
+          echo "ERROR: Protected path 'hidden' missing or broken."
           exit 1
         fi
-        echo "Success: Bracket-free directory matrix layout verified."
+        echo "Success: All structural folder boundaries verified."
 
-    - name: Compile Hidden Core Systems
+    - name: Compile Hidden Core Architecture
       run: |
         echo "Assembling system backend logic modules..."
-        gcc hidden/main.c hidden/engine.c hidden/collector.c hidden/voip.c -o sa_akhran_test_core
+        gcc hidden/main.c hidden/gateway.c hidden/engine.c hidden/collector.c hidden/voip.c -o sa_akhran_test_core
         echo "Success: Standalone native execution binary compiled flawlessly."
 
-    - name: Execute Sluice-Bench Test Verification
+    - name: Execute Core Verification Run
       run: |
         echo "Booting testing runtime package..."
         ./sa_akhran_test_core
