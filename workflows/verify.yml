@@ -1,0 +1,43 @@
+# SA-AKHRAN - Core Integration Guard Pipeline
+# Copyright Seliim Ahmed. All rights reserved. (seliim.ahmed@gmail.com)
+
+name: SA-AKHRAN Path Verification
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-verify:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository Code
+      uses: actions/checkout@v4
+
+    - name: Verify Strict Matrix Folders
+      run: |
+        echo "Validating path structural constraints..."
+        if [ ! -d "calculations/dump" ]; then
+          echo "ERROR: Critical path 'calculations/dump' missing or broken."
+          exit 1
+        fi
+        if [ ! -d "hidden" ]; then
+          echo "ERROR: Critical path 'hidden' missing or broken."
+          exit 1
+        fi
+        echo "Success: Bracket-free directory matrix layout verified."
+
+    - name: Compile Hidden Core Systems
+      run: |
+        echo "Assembling system backend logic modules..."
+        gcc hidden/main.c hidden/engine.c hidden/collector.c hidden/voip.c -o sa_akhran_test_core
+        echo "Success: Standalone native execution binary compiled flawlessly."
+
+    - name: Execute Sluice-Bench Test Verification
+      run: |
+        echo "Booting testing runtime package..."
+        ./sa_akhran_test_core
+        echo "Success: Telemetry calculation streams cleared through all stages."
