@@ -1,10 +1,16 @@
-Proprietary Commercial License
-™ Seliim Ahmed (seliim.ahmed@gmail.com)
+=============================================================================
+SA-AKHRAN SOFTWARE INFRASTRUCTURE & VISUAL ARCHITECTURE PROPRIETARY LICENSE
+=============================================================================
+Design Matrix & Frontend Layout Property of: Seliim Ahmed
+Primary Contact Node: seliim.ahmed@gmail.com
 
-All rights reserved. 
+All layout design elements, interactive fluid/liquid animation codebases, touch 
+target parameters (60% greater than finger metrics), explicit color transition 
+states (Tor Red execution states), and structural typography implementations 
+contained within this distribution are registered under strict copyright.
 
-1. This software and its core system files ("SA-AKHRAN"), including but not limited to 
-   the secure engine codebase (`sa_akhran_core.c`), are the exclusive property of Seliim Ahmed.
-2. Unauthorized copying, modification, or distribution of any file in this repository 
-   via any medium is strictly prohibited.
-3. The core file system components remain password-locked and hidden from public usage.
+© Seliim Ahmed. All Rights Reserved. 
+
+Unauthorized compilation, modification, redistribution, or visual cloning 
+of these design mechanics without written permission is strictly prohibited.
+=============================================================================
