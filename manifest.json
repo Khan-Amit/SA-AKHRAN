@@ -1,11 +1,6 @@
 {
   "project_name": "SA-AKHRAN",
   "engine_version": "1.0.0",
-  "interface_elements": {
-    "dashboard_layout": "page_2_dashboard.jpg",
-    "primary_text_color": "0x000000",
-    "background_color": "0xFFFFFF"
-  },
   "network_configuration": {
     "voip_ingress_port": 5060,
     "voip_egress_port": 5090,
