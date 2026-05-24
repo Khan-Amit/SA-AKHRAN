@@ -12,12 +12,13 @@ typedef struct {
     char data[BUFFER_SIZE];
 } ClearPacket;
 
+extern _Atomic int system_is_running;
 extern _Atomic uint64_t sluice_bench_1;
 extern _Atomic uint64_t sluice_bench_2;
 extern ClearPacket meeting_room_pool[RING_BUFFER_SIZE];
 
 void* virus_filtration_engine(void* arg) {
-    while (1) {
+    while (atomic_load_explicit(&system_is_running, memory_order_acquire)) {
         uint64_t gate_2 = atomic_load_explicit(&sluice_bench_2, memory_order_relaxed);
         uint64_t gate_1 = atomic_load_explicit(&sluice_bench_1, memory_order_acquire);
 
@@ -29,7 +30,6 @@ void* virus_filtration_engine(void* arg) {
         uint32_t processing_slot = gate_2 & (RING_BUFFER_SIZE - 1);
         int threat_found = 0;
 
-        // SLUICE-BENCH 2: Clear fine debris and viral payload traces
         for (size_t i = 0; i < meeting_room_pool[processing_slot].payload_len; i++) {
             if (meeting_room_pool[processing_slot].data[i] == 0x90) {
                 threat_found = 1;
@@ -38,12 +38,10 @@ void* virus_filtration_engine(void* arg) {
         }
 
         if (threat_found) {
-            // Scrub data chunk completely clean upon malicious match detection
             memset(meeting_room_pool[processing_slot].data, 0, BUFFER_SIZE);
             meeting_room_pool[processing_slot].payload_len = 0;
         }
 
-        // Advance gate 2 independently to signify completion of fine cleansing
         atomic_store_explicit(&sluice_bench_2, gate_2 + 1, memory_order_release);
     }
     return NULL;
