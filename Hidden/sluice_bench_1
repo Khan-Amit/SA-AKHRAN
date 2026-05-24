@@ -17,7 +17,9 @@ typedef struct {
     char data[BUFFER_SIZE];
 } ClearPacket;
 
-// External standalone gates and shared pools
+// Global engine state link from state_controller.c
+extern _Atomic int system_is_running;
+
 extern _Atomic uint64_t sluice_bench_1;
 extern _Atomic uint64_t sluice_bench_3;
 extern ClearPacket meeting_room_pool[RING_BUFFER_SIZE];
@@ -38,11 +40,11 @@ void* voip_ingress_engine(void* arg) {
 
     char raw_flood_buffer[BUFFER_SIZE + 64];
 
-    while (1) {
+    // Controlled processing loop: stops instantly when STOP button is tapped
+    while (atomic_load_explicit(&system_is_running, memory_order_acquire)) {
         uint64_t gate_1 = atomic_load_explicit(&sluice_bench_1, memory_order_relaxed);
         uint64_t gate_3 = atomic_load_explicit(&sluice_bench_3, memory_order_acquire);
 
-        // Ring buffer boundary safety wall
         if ((gate_1 - gate_3) >= RING_BUFFER_SIZE) {
             __builtin_ia32_pause();
             continue;
@@ -54,7 +56,6 @@ void* voip_ingress_engine(void* arg) {
             continue;
         }
 
-        // SLUICE-BENCH 1: Clear heavy debris and deflect snoopers
         if (bytes_collected < 12 || strncmp(raw_flood_buffer, "AUTH_KEY", 8) != 0) {
             continue; 
         }
@@ -64,9 +65,9 @@ void* voip_ingress_engine(void* arg) {
         meeting_room_pool[target_slot].payload_len = bytes_collected - 12;
         memcpy(meeting_room_pool[target_slot].data, raw_flood_buffer + 12, bytes_collected - 12);
 
-        // Move gate 1 forward independently
         atomic_store_explicit(&sluice_bench_1, gate_1 + 1, memory_order_release);
     }
+    
     close(ingress_fd);
     return NULL;
 }
