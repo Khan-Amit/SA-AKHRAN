@@ -56,7 +56,7 @@ void ui_trigger_on_click_report(void) {
     if (!sorter_log) {
         printf(" Public Sorter Ledger: Awaiting data inputs...\n");
     } else {
-        char line_buffer[512];
+        char line_buffer[256];
         printf("--- EXTRACTED PUBLIC SORTER LOGS ---\n");
         while (fgets(line_buffer, sizeof(line_buffer), sorter_log)) {
             printf(" %s", line_buffer);
