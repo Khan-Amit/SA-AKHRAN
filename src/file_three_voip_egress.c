@@ -1,0 +1,69 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <arpa/inet.h>
+#include <sys/socket.h>
+#include <stdatomic.h>
+
+#define EGRESS_PORT 5090
+#define BUFFER_SIZE 4096
+#define RING_BUFFER_SIZE 16
+
+typedef struct {
+    uint32_t transaction_id;
+    uint32_t style_id;
+    size_t payload_len;
+    char data[BUFFER_SIZE];
+} ClearPacket;
+
+extern _Atomic int system_is_running;
+extern _Atomic uint64_t sluice_bench_2;
+extern _Atomic uint64_t sluice_bench_3;
+extern ClearPacket meeting_room_pool[RING_BUFFER_SIZE];
+
+void* voip_egress_engine(void* arg) {
+    int egress_fd = socket(AF_INET, SOCK_DGRAM, 0);
+    struct sockaddr_in egress_target_addr;
+    
+    memset(&egress_target_addr, 0, sizeof(egress_target_addr));
+    egress_target_addr.sin_family = AF_INET;
+    egress_target_addr.sin_port = htons(EGRESS_PORT);
+    inet_pton(AF_INET, "127.0.0.1", &egress_target_addr.sin_addr);
+
+    FILE* final_decision_ledger = fopen("executive_decisions.bin", "ab");
+
+    while (atomic_load_explicit(&system_is_running, memory_order_acquire)) {
+        uint64_t gate_3 = atomic_load_explicit(&sluice_bench_3, memory_order_relaxed);
+        uint64_t gate_2 = atomic_load_explicit(&sluice_bench_2, memory_order_acquire);
+
+        if (gate_3 == gate_2) {
+            __builtin_ia32_pause();
+            continue;
+        }
+
+        uint32_t final_slot = gate_3 & (RING_BUFFER_SIZE - 1);
+
+        // 9th Floor Node Processing Layer execution simulation block
+        char complete_decision_string[BUFFER_SIZE + 4];
+        memcpy(complete_decision_string, "OK:", 3);
+        memcpy(complete_decision_string + 3, meeting_room_pool[final_slot].data, meeting_room_pool[final_slot].payload_len);
+        size_t complete_len = meeting_room_pool[final_slot].payload_len + 3;
+
+        if (meeting_room_pool[final_slot].payload_len > 0) {
+            fwrite(complete_decision_string, 1, complete_len, final_decision_ledger);
+            fflush(final_decision_ledger);
+        }
+
+        // SLUICE-BENCH 3: Deflect trackers by delivering results through the untrackable isolated VoIP 2 egress portal
+        sendto(egress_fd, complete_decision_string, complete_len, 0, 
+               (struct sockaddr*)&egress_target_addr, sizeof(egress_target_addr));
+    }
+    
+    if (final_decision_ledger) {
+        fflush(final_decision_ledger);
+        fclose(final_decision_ledger);
+    }
+    close(egress_fd);
+    return NULL;
+}
