@@ -4,29 +4,26 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch: # Allows you to trigger this manually via a button in GitHub
+  workflow_dispatch:
 
 jobs:
   build_and_cleanup:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Pull down the repository files into the environment
       - name: Checkout Code Repository
         uses: actions/checkout@v4
 
-      # 2. Run your physical clean up rules automatically
       - name: Purge Legacy and Conflict Clutter Files
         run: |
           echo "[*] Cleaning old build artifacts and purging redundant clutter..."
           rm -f index.html installer.html sa_akhran.bat Install_SA_AKHRAN.de...
           rm -f engine_system *.bin *.log
 
-      # 3. Compile the unlinked atomic C engine components
       - name: Compile Sluice-Bench Infrastructure
         run: |
           echo "[*] Executing multi-file compiler serialization across memory lines..."
-          gcc main_coordinator.c src/state_controller.c src/file_one_voip_ingress.c src/file_two_filtration.c src/file_three_voip_egress.c -lpthread -O2 -o engine_system
+          gcc main_coordinator.c src/state_controller.c src/ui_touch_mapping.c file_one_voip_ingress.c file_two_filtration.c file_three_voip_egress.c -lpthread -O2 -o engine_system
           
           if [ $? -eq 0 ]; then
             echo "[+] Pipeline compilation successful: 'engine_system' generated."
