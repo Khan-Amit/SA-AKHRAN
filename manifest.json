@@ -1,6 +1,11 @@
 {
   "project_name": "SA-AKHRAN",
   "engine_version": "1.0.0",
+  "interface_elements": {
+    "dashboard_layout": "page_2_dashboard.jpg",
+    "primary_text_color": "0x000000",
+    "background_color": "0xFFFFFF"
+  },
   "network_configuration": {
     "voip_ingress_port": 5060,
     "voip_egress_port": 5090,
@@ -10,12 +15,6 @@
     "sluice_bench_1_debris_clearance": true,
     "sluice_bench_2_virus_filtration": true,
     "sluice_bench_3_untrackable_exit": true
-  },
-  "style_index_layers": {
-    "default_class_flags": "0x00FF00AA",
-    "primary_ui_color": 65535,
-    "font_weight_bold": 700,
-    "active_layout_name": "akhran_dashboard_layout"
   },
   "distribution_targets": {
     "main_deep_reservoir": "main_dump.bin",
